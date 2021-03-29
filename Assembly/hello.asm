@@ -8,7 +8,7 @@ bits 64
 default rel
 
 segment .data
-    msg db "Hello World", 0xd, 0xa, 0
+    msg       db "Hello World", 0xd, 0xa, 0
 
 segment .text
 global main
@@ -19,10 +19,10 @@ extern printf
 main:
     push      rbp
     mov       rbp, rsp
-    sub        rsp, 32
+    sub       rsp, 32
 
-    lea         rcx, [msg]
-    call        printf
+    lea       rcx, [msg]
+    call      printf
 
-    xor         rax, rax
-    call ExitProcess
+    xor       rax, rax
+    call      ExitProcess
