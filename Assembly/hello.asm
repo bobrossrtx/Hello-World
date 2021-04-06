@@ -1,28 +1,24 @@
 ;================================================================
-;   Author: Bobrossrtx
-;   Name: hello.asm
-;   Des: Hello world program written in assembly
+;   Auth: 	Bobrossrtx
+;   Name: 	hello.asm
+;   Desc:	Hello world program written in assembly
 ;================================================================
 
-bits 64
-default rel
+global _start
 
-segment .data
-    msg db "Hello World", 0xd, 0xa, 0
+section .text:
 
-segment .text
-global main
-extern ExitProcess
+_start:
+    mov eax, 0x4		;Use write syscall
+    mov ecx, 1			;Use stdout as fd
+    mov ecx, message		;Use message as buffer
+    mov edx, message_length	;Supplying message length
+    int 0x80			;Invoke syscall
 
-extern printf
+    mov eax, 0x1
+    mov ebx, 0
+    int 0x80
 
-main:
-    push      rbp
-    mov       rbp, rsp
-    sub        rsp, 32
-
-    lea         rcx, [msg]
-    call        printf
-
-    xor         rax, rax
-    call ExitProcess
+section .data:
+    message: 		db "Hello World", 0xA
+    message_length	equ $-message
